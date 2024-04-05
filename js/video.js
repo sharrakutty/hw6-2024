@@ -1,106 +1,78 @@
 var video;
 
 window.addEventListener("load", function() {
-	console.log("Good job opening the window")
+	console.log("Good job opening the window");
+	video = document.querySelector("#player1");
+	video.autoplay = false;
+	video.loop = false;
+	console.log ("Autoplay is set to" + video.autoplay)
+	console.log ("Loop is set to" + video.loop)
 
 });
 
 document.querySelector("#play").addEventListener("click", function() {
-console.log("Play Video");
-
+	var video = document.querySelector("video");
+	video.play();
+	console.log("Play Video")
+	console.log("Current volume: " +video.volume)
 });
 
-let video = document.querySelector("#player1");
+document.querySelector("#pause").addEventListener("click", function() {
+	var video = document.querySelector("video");
+	video.pause();
+	console.log("Pause Video")
+  });
 
-// Initialize the video element and turn off autoplay and looping
-video.autoplay = false;
-video.loop = false;
+document.querySelector("#slower").addEventListener("click", function() {
+	var video = document.querySelector("video");
+	video.playbackRate -= 0.1;
+	console.log("New speed is set to " +video.playbackRate)
+  });
 
-// Access the play button
-let playButton = document.querySelector("#play");
+document.querySelector("#faster").addEventListener("click", function() {
+	var video = document.querySelector("video");
+	video.playbackRate += 0.1;
+	console.log("New speed is set to " +video.playbackRate)
+  });
+  
+document.querySelector("#skip").addEventListener("click", function() {
+	var video = document.querySelector("video");
+	var newTime = video.currentTime + 10;
+	if (newTime < video.duration) {
+		video.currentTime = newTime;
+	} else {
+		video.currentTime = 0;
+	}
+	console.log("The video is currently at " +video.currentTime);
+  });
 
-// Add an event listener to the play button to play the video and update the volume information
-playButton.addEventListener("click", function() {
-video.play();
-updateVolume();
+document.querySelector("#mute").addEventListener("click", function() {
+	var video = document.querySelector("video");
+	video.muted = !video.muted;
+	var muteButton = document.querySelector("#mute");
+	muteButton.textContent = video.muted ? "Unmute" : "Mute"
+	console.log("The video is muted " +video.muted);
+  });
+
+  document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("volume").textContent = "100%";
+    document.querySelector("#slider").addEventListener("input", function(e) {
+        var video = document.querySelector("video");
+        var volumeValue = e.target.value;
+        video.volume = volumeValue / 100;
+        document.getElementById("volume").textContent = volumeValue + "%"; // Update the volume span content
+        console.log("New volume: " + video.volume);
+    });
 });
 
-// Access the pause button
-let pauseButton = document.querySelector("#pause");
+document.querySelector("#vintage").addEventListener("click", function() {
+	var video = document.querySelector("video");
+	video.classList.add("oldSchool");
+	console.log("The video is in OLd School mode")
+  });
 
-// Add an event listener to the pause button to pause the video
-pauseButton.addEventListener("click", function() {
-video.pause();
+document.querySelector("#orig").addEventListener("click", function() {
+	var video = document.querySelector("video");
+	video.classList.remove("oldSchool");
+	console.log("The video is no longer in OLd School mode")
 });
-
-// Access the slow down button
-let slowDownButton = document.querySelector("#slower");
-
-// Add an event listener to the slow down button to slow down the video speed by 10% and log the new speed to the console
-let currentSpeed = 1;
-slowDownButton.addEventListener("click", function() {
-currentSpeed -= 0.1;
-video.playbackRate = currentSpeed;
-console.log(currentSpeed);
-});
-
-// Access the speed up button
-let speedUpButton = document.querySelector("#faster");
-
-// Add an event listener to the speed up button to increase the video speed by 10% and log the new speed to the console
-speedUpButton.addEventListener("click", function() {
-currentSpeed += 0.1;
-video.playbackRate = currentSpeed;
-console.log(currentSpeed);
-});
-
-// Function to update the volume information
-function updateVolume() {
-	console.log(video.volume);
-}
-
-// Access the skip ahead button
-let skipAheadButton = document.querySelector("#skip");
-
-// Add an event listener to the skip ahead button to advance the current video by 10 seconds, or go back to the start of the video if the current time is greater than the video length
-skipAheadButton.addEventListener("click", function() {
-let currentTime = video.currentTime;
-let duration = video.duration;
-if (currentTime + 10 <= duration) {
-video.currentTime += 10;
-} else {
-video.currentTime = 0;
-}
-console.log(videoElement.currentTime);
-});
-
-// Access the mute button
-let muteButton = document.querySelector("#mute");
-
-// Add an event listener to the mute button to mute/unmute the video and update the text in the button
-muteButton.addEventListener("click", function() {
-if (video.muted) {
-video.muted = false;
-muteButton.innerText = "Mute";
-} else {
-video.muted = true;
-muteButton.innerText = "Unmute";
-}
-});
-
-// Access the volume slider
-let volumeSlider = document.querySelector("#slider");
-
-// Add an event listener to the volume slider to change the volume based on the slider and update the volume information
-volumeSlider.addEventListener("input", function() {
-video.volume = volumeSlider.value / 100;
-updateVolume();
-});
-
-// Access the oldSchool class and add it to the video element
-let oldSchoolClass = document.querySelector(".oldSchool");
-oldSchoolClass.classList.add("video");
-
-// Access the original class and remove it from the video element
-let originalClass = document.querySelector(".original");
-originalClass.classList.remove("video");

@@ -10,12 +10,15 @@ window.addEventListener("load", function() {
 
 });
 
+video.addEventListener("volumechange", function() {
+	console.log("Current volume: " +video.volume)
+});
+
 document.querySelector("#play").addEventListener("click", function() {
 	var video = document.querySelector("video");
 	video.play();
 	console.log("Play Video")
-	video.volume = video.volume;
-	console.log("Current volume: " +video.volume)
+	console.log("Current volume: " + video.volume)
 });
 
 document.querySelector("#pause").addEventListener("click", function() {

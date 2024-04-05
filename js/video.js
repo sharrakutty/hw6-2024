@@ -14,6 +14,7 @@ document.querySelector("#play").addEventListener("click", function() {
 	var video = document.querySelector("video");
 	video.play();
 	console.log("Play Video")
+	video.volume = video.volume;
 	console.log("Current volume: " +video.volume)
 });
 
@@ -59,7 +60,8 @@ document.querySelector("#mute").addEventListener("click", function() {
     document.querySelector("#slider").addEventListener("input", function(e) {
         var video = document.querySelector("video");
         var volumeValue = e.target.value;
-        video.volume = volumeValue / 100;
+        video.volume =
+		volumeValue / 100;
         document.getElementById("volume").textContent = volumeValue + "%"; // Update the volume span content
         console.log("New volume: " + video.volume);
     });
